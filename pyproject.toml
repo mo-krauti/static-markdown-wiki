@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "static-markdown-wiki"
+version = "0.0.1"
+requires-python = ">=3.13"
+dependencies = [
+  "Jinja2~=3.1.6",
+  "markdown~=3.7",
+  "Pygments~=2.19.1"
+]
+
+[project.scripts]
+static-markdown-wiki = "static_markdown_wiki.main:main"
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+minversion = "7.2"
+addopts = "--strict-markers -s --cache-clear --junitxml=test_report.xml"
+testpaths = ["tests"]
