@@ -1,5 +1,13 @@
 # static-markdown-wiki
 
+Generates a website for your markdown notes. Features:
+
+* `[[wikilinks]]` support
+* generates page listings
+* code syntax highlighting
+* themeable 
+* lightweight
+
 ## Setup
 
 ```bash
