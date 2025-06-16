@@ -114,8 +114,10 @@ class GeneratedFolderPage(Page):
         links = []
         for page_url in pages:
             if page_url.startswith(self.url):
-                remaining_url_parts = page_url.removeprefix(self.url).split("/")
-                if len(remaining_url_parts) == 1 or remaining_url_parts[1] == "":
+                remaining_url_parts = (
+                    page_url.removeprefix(self.url).removesuffix("/").split("/")
+                )
+                if len(remaining_url_parts) == 1 and remaining_url_parts[0] != "":
                     links.append((page_url, pages[page_url].title))
         return self.context.jinja_env.get_template("folder_listing.html").render(
             links=links,
