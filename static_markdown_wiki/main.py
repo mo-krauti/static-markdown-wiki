@@ -1,4 +1,5 @@
 import pathlib
+import shutil
 import sys
 from dataclasses import dataclass
 
@@ -131,12 +132,15 @@ pages: dict[str, Page] = {}
 
 
 def main():
-    template_folder_path = pathlib.Path(sys.argv[1]).resolve()
+    if len(sys.argv) == 4:
+        theme_folder_path = pathlib.Path(sys.argv[3]).resolve()
+    else:
+        theme_folder_path = pathlib.Path(__file__).parent.resolve() / "theme"
     context = StaticMarkdownWikiContext(
+        pathlib.Path(sys.argv[1]).resolve(),
         pathlib.Path(sys.argv[2]).resolve(),
-        pathlib.Path(sys.argv[3]).resolve(),
         jinja2.Environment(
-            loader=jinja2.FileSystemLoader(template_folder_path),
+            loader=jinja2.FileSystemLoader(theme_folder_path),
             autoescape=jinja2.select_autoescape(),
         ),
     )
@@ -157,6 +161,11 @@ def main():
         page.write_html()
 
     print(f"Wrote {len(pages)} pages")
+
+    for css_path in theme_folder_path.glob("*.css"):
+        css_relative_path = css_path.relative_to(theme_folder_path)
+        css_out_path = context.out_folder_path.joinpath(css_relative_path)
+        shutil.copy(css_path, css_out_path)
 
 
 if __name__ == "__main__":
