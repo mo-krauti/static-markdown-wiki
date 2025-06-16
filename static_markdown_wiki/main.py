@@ -7,6 +7,9 @@ import markdown
 import markupsafe
 from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.wikilinks import WikiLinkExtension
+from pymdownx.highlight import HighlightExtension
+from pymdownx.magiclink import MagiclinkExtension
+from pymdownx.superfences import SuperFencesCodeExtension
 
 
 @dataclass
@@ -101,7 +104,9 @@ class MarkdownPage(Page):
             self.markdown_path.read_text(),
             extensions=[
                 WikiLinkExtension(build_url=build_url),
-                CodeHiliteExtension(),
+                HighlightExtension(),
+                MagiclinkExtension(),
+                SuperFencesCodeExtension(),
             ],
         )
 
