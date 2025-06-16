@@ -5,7 +5,6 @@ from dataclasses import dataclass
 import jinja2
 import markdown
 import markupsafe
-from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.wikilinks import WikiLinkExtension
 from pymdownx.highlight import HighlightExtension
 from pymdownx.magiclink import MagiclinkExtension
@@ -20,7 +19,6 @@ class StaticMarkdownWikiContext:
 
 
 def build_url(label: str, base: str, end: str) -> str:
-    folder_label = f"{label}/index"
     for page in pages.values():
         if page.title == label:
             return page.url
@@ -67,7 +65,7 @@ class Page:
 
     def generate_breadcrumb_html(self) -> str:
         self.parent_folder_urls = []
-        breadcrumb_html = f"<a href='/'>Home</a>"
+        breadcrumb_html = "<a href='/'>Home</a>"
         if self.is_folder:
             breadcrumb_end = 2
         else:
