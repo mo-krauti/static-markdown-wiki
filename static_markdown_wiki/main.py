@@ -167,6 +167,16 @@ def main():
         css_out_path = context.out_folder_path.joinpath(css_relative_path)
         shutil.copy(css_path, css_out_path)
 
+    number_files = 0
+    for file_path in context.content_folder_path.rglob("*.*"):
+        if file_path.is_file() and file_path.suffix != ".md":
+            file_relative_path = file_path.relative_to(context.content_folder_path)
+            file_out_path = context.out_folder_path.joinpath(file_relative_path)
+            if file_out_path.parent.exists():
+                shutil.copy(file_path, file_out_path)
+                number_files += 1
+    print(f"Copied {number_files} files")
+
 
 if __name__ == "__main__":
     main()
