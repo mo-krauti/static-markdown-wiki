@@ -124,7 +124,7 @@ class GeneratedFolderPage(Page):
                 if len(remaining_url_parts) == 1 and remaining_url_parts[0] != "":
                     links.append((page_url, pages[page_url].title))
         return self.context.jinja_env.get_template("folder_listing.html").render(
-            links=links,
+            links=sorted(links, key=lambda link: link[1]),
         )
 
 
